@@ -44,34 +44,34 @@ export default function ChatInterface() {
     }
   }, [data]);
 
-  const LoadingMessage = () => (
-    <div className="space-y-2">
-      <div className="flex items-start space-x-3">
-        <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
-          <Bot className="w-4 h-4 text-white" />
-        </div>
-        <div className="flex-1">
-          <div className="inline-block bg-slate-800/50 p-3 rounded-2xl">
-            <div className="flex items-center space-x-2">
-              <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                <div
-                  className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"
-                  style={{ animationDelay: "0.2s" }}
-                ></div>
-                <div
-                  className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"
-                  style={{ animationDelay: "0.4s" }}
-                ></div>
-              </div>
-              <span className="text-sm text-gray-400">AI is thinking...</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="text-xs text-gray-500 px-11">Just now</div>
-    </div>
-  );
+  // const LoadingMessage = () => (
+  //   <div className="space-y-2">
+  //     <div className="flex items-start space-x-3">
+  //       <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
+  //         <Bot className="w-4 h-4 text-white" />
+  //       </div>
+  //       <div className="flex-1">
+  //         <div className="inline-block bg-slate-800/50 p-3 rounded-2xl">
+  //           <div className="flex items-center space-x-2">
+  //             <div className="flex space-x-1">
+  //               <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+  //               <div
+  //                 className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"
+  //                 style={{ animationDelay: "0.2s" }}
+  //               ></div>
+  //               <div
+  //                 className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"
+  //                 style={{ animationDelay: "0.4s" }}
+  //               ></div>
+  //             </div>
+  //             <span className="text-sm text-gray-400">AI is thinking...</span>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //     <div className="text-xs text-gray-500 px-11">Just now</div>
+  //   </div>
+  // );
   return (
     <>
       {isLoading ? (
@@ -102,47 +102,54 @@ export default function ChatInterface() {
               ref={scrollRef}
             >
               {/* Loading Message */}
-              {data[0].messages.map((msg, index) => {
-                const isUser = msg.type === "human";
-                const content = msg.data?.content || "";
+              {data.length > 0 &&
+                data[0].messages.map((msg, index) => {
+                  const isUser = msg.type === "human";
+                  const content = msg.data?.content || "";
 
-                return (
-                  <div
-                    key={index}
-                    className={`flex items-start space-x-3 ${
-                      isUser ? "flex-row-reverse space-x-reverse" : ""
-                    }`}
-                  >
-                    {/* Avatar */}
+                  return (
                     <div
-                      className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                        isUser ? "bg-blue-500" : "bg-cyan-500"
+                      key={index}
+                      className={`flex items-start space-x-3 ${
+                        isUser ? "flex-row-reverse space-x-reverse" : ""
                       }`}
                     >
-                      {isUser ? (
-                        <User className="w-4 h-4 text-white" />
-                      ) : (
-                        <Bot className="w-4 h-4 text-white" />
-                      )}
-                    </div>
-
-                    {/* Message content */}
-                    <div className={`flex-1 ${isUser ? "text-right" : ""}`}>
+                      {/* Avatar */}
                       <div
-                        className={`inline-block max-w-[80%] p-3 rounded-2xl ${
-                          isUser
-                            ? "bg-blue-600 text-white ml-auto"
-                            : "bg-slate-800/50 text-white"
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                          isUser ? "bg-blue-500" : "bg-cyan-500"
                         }`}
                       >
-                        <p className="text-sm leading-relaxed whitespace-pre-line">
-                          {content}
-                        </p>
+                        {isUser ? (
+                          <User className="w-4 h-4 text-white" />
+                        ) : (
+                          <Bot className="w-4 h-4 text-white" />
+                        )}
+                      </div>
+
+                      {/* Message content */}
+                      <div className={`flex-1 ${isUser ? "text-right" : ""}`}>
+                        <div
+                          className={`inline-block max-w-[80%] p-3 rounded-2xl ${
+                            isUser
+                              ? "bg-blue-600 text-white ml-auto"
+                              : "bg-slate-800/50 text-white"
+                          }`}
+                        >
+                          <p className="text-sm leading-relaxed whitespace-pre-line">
+                            {content}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              {/* Loading Indicator */}
+              {data.length == 0 && (
+                <div className="flex justify-center py-36">
+                  <Riple color="#26C6DA" size="medium" text="" textColor="" />
+                </div>
+              )}
             </div>
 
             {/* Input */}

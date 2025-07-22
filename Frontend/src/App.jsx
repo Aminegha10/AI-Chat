@@ -9,7 +9,7 @@ export default function Home() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-teal-900 to-slate-900">
         <Navbar />
         <main className="container mx-auto px-4 pt-16">
-          {/* <HeroSection /> */}
+          <HeroSection />
           <ChatInterface />
         </main>
 
